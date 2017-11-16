@@ -6,10 +6,10 @@
 		<!-- 计算页 -->
 		<div v-if="page_type === 1" class="dlb-calculator-container">
 			<div class="input-wrap money-sum">
-				<input type="tel" v-model="money_sum" placeholder="不超过300万">
+				<input type="number" v-model="money_sum" placeholder="不超过300万">
 			</div>
 			<div class="input-wrap get-money-day">
-				<input type="tel" v-model="getmoney_day" placeholder="请输入本月第几天">
+				<input type="number" v-model="getmoney_day" placeholder="请输入本月第几天">
 			</div>
 			<div class="radio-wrap month-type">
 				<span :class="{'selected': month_type === 1}" @click="switch_type(1)"></span>
@@ -18,11 +18,11 @@
 			<div class="input-wrap month-day"
 				 v-if="month_type === 1">
 				<p>本月第几天还款</p>
-				<input type="tel" v-model="benyue_day" placeholder="还款日需超过提款日至少5天">
+				<input type="number" v-model="benyue_day" placeholder="还款日需超过提款日至少5天">
 			</div>
 			<div class="input-wrap month-day" v-else>
 				<p>下月第几天还款</p>
-				<input type="tel" v-model="xiayue_day" placeholder="还款日需超过提款日至少5天">
+				<input type="number" v-model="xiayue_day" placeholder="还款日需超过提款日至少5天">
 			</div>
 			<div class="button-wrap">
 				<button @click="calculate_act"></button>

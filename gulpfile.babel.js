@@ -17,7 +17,7 @@ function deploy() {
   p = p.pipe(rsync({
       hostname: '123.206.20.110',
       root: 'dist',
-      destination: '/home/G7/',
+      destination: '/data/g7/',
       username : "root",
       exclude : ['.DS_Store','.svn' , ".git"]
     }));

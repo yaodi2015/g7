@@ -11,7 +11,7 @@
 					<span :class="{'selected': time_type === 3}" @click="switch_type(3)"></span>
 				</div>
 				<div class="input-wrap">
-					<input type="tel" v-model="money_sum" placeholder="最高不超过50万">
+					<input type="number" v-model="money_sum" placeholder="最高不超过50万">
 				</div>
 				
 			</div>
@@ -60,8 +60,9 @@
 		methods: {
 			//计算方法
 			calculate() {
-				if (this.money_sum == 0 || this.money_sum > 500000) {
-					return window.alert('最高不超过50万');
+
+				if (this.money_sum <= 0 || this.money_sum > 500000) {
+					return window.alert('最高不超过50万, 最低不小于0');
 				}
 				let shouxufei = 0,
 					lilv = 0,
@@ -160,9 +161,9 @@
 		// 点击计算按钮
 		.calculate-button-area {
 			position: absolute;
-			left: 0.14rem;
-			top: 5.96rem;
-			width: 3.5rem;
+			left: 0.36rem;
+			top: 6.1rem;
+			width: 3rem;
 			height: .35rem;
 			button {
 				border: none;

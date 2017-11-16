@@ -12,7 +12,8 @@
 					<span @click="switch_type(2)" :class="{'firm-type-active': firmType === 2}">中石化</span>
 				</div>
 				<div  v-if="firmType === 2" class="shihua-input-area">
-					<input type="tel" v-model="shihua_money" placeholder="每月单卡加油升数（单位：升）">
+					<input type="number" v-model="shihua_money" placeholder="每月单卡加油升数（单位：升）">
+					<input type="number" v-model="shihua_price" placeholder="月均油价（单位：元/升）">
 				</div>
 				<div v-else class="shiyou-input-area">
 					<div class="province-area">
@@ -52,7 +53,7 @@
 						</select>
 					</div>
 					<div class="money-sum">
-						<input type="tel" v-model="shiyou_money" placeholder="每月中石油消耗金额（单位：元）">
+						<input type="number" v-model="shiyou_money" placeholder="每月中石油消耗金额（单位：元）">
 					</div>
 				</div>
 			</div>
@@ -137,6 +138,7 @@
 				shiyou_money: '',  // 中石油消费金额
 				shiyou_province: '', //中石油选择省份
 				shihua_money: '', // 中石化消费升数
+				shihua_price: '', // 中石化油价
 				shiyou_refund_money: '', //中石油返利金额
 				shihua_refund_score: '', // 中石化返还积分
 				shiyou_fanlibi: '',  //中石油返利比
@@ -150,6 +152,10 @@
 					if (conf[this.shiyou_province] == undefined) {
 						return alert('请选择省份');
 					}
+					if (!/^\d+(\.\d+)*$/.test(this.shiyou_money)) {
+						return alert('中石油消费金额输入不合法');
+
+					}
 					// 中石油计算公式，返利金额
 					this.shiyou_refund_money = this.shiyou_money * conf[this.shiyou_province] * 0.01;
 					this.shiyou_refund_money = this.shiyou_refund_money.toFixed(2);
@@ -160,9 +166,19 @@
 					window.scrollTo(0, 0);
 				} else if(this.firmType == 2) {
 					// 中石化计算公式
+					// 判断用户输入内容
+					if (!/^\d+(\.\d+)*$/.test(this.shihua_money)) {
+						return alert('单卡加油升数输入不合法');
+
+					}
+					if (!/^\d+(\.\d+)*$/.test(this.shihua_price)) {
+
+						return alert('月均油价输入不合法');
+					}
+					
 					const jidu_v = this.shihua_money * 3;
 					// 油价
-					const youjia = 5.5;
+					const youjia = this.shihua_price;
 					if (jidu_v <= 1000) {
 						this.shihua_refund_score = jidu_v * 2 * 0.01;
 					} else if (jidu_v <= 2000) {
@@ -235,14 +251,13 @@
 			}
 			// 中石化输入
 			.shihua-input-area {
-				// display: none;
+				
 				height: .94rem;
-				// border-bottom:  1px solid #87be2d;
-				// padding: 0 .22rem;
+				
 				font-size: .13rem;	
 				color: #989898;
 				input {
-					margin-top: .25rem;
+					margin-top: .1rem;
 					border: none;
 					border-radius: 5px;
 					background: #d3d3d3;
@@ -290,10 +305,10 @@
 		// 点击计算按钮
 		.calculate-button-area {
 			position: absolute;
-			left: 0.14rem;
-			top: 5.96rem;
-			width: 3.5rem;
-			height: .35rem;
+			left: 0.4rem;
+			top: 5.7rem;
+			width: 2.96rem;
+			height: .32rem;
 			button {
 				border: none;
 				background: none;
